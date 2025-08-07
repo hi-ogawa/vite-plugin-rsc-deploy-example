@@ -27,6 +27,11 @@ export default defineConfig({
       server: {
         environmentName: 'rsc'
       },
+      config: {
+        // Nitro automatically chooses a preset based on deployed environment,
+        // but it can be explicitly specified if needed. e.g.
+        // preset: 'vercel',
+      },
     }),
   ],
 
