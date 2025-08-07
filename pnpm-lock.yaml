@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@hiogawa/vite-plugin-nitro':
-        specifier: https://pkg.pr.new/hi-ogawa/vite-plugins/@hiogawa/vite-plugin-nitro@ca5ae37
-        version: https://pkg.pr.new/hi-ogawa/vite-plugins/@hiogawa/vite-plugin-nitro@ca5ae37(@netlify/blobs@9.1.2)(vite@7.0.6(@types/node@24.2.0)(jiti@2.5.1)(terser@5.43.1))
+        specifier: 0.0.1
+        version: 0.0.1(@netlify/blobs@9.1.2)(vite@7.0.6(@types/node@24.2.0)(jiti@2.5.1)(terser@5.43.1))
       '@vitejs/plugin-rsc':
         specifier: latest
         version: 0.4.17(react-dom@19.1.1(react@19.1.1))(react@19.1.1)(vite@7.0.6(@types/node@24.2.0)(jiti@2.5.1)(terser@5.43.1))
@@ -457,9 +457,8 @@ packages:
   '@fastify/busboy@3.1.1':
     resolution: {integrity: sha512-5DGmA8FTdB2XbDeEwc/5ZXBl6UbBAyBOOLlPuBnZ/N1SwdH9Ii+cOX3tBROlDgcTXxjOYnLMVoKk9+FXAw0CJw==}
 
-  '@hiogawa/vite-plugin-nitro@https://pkg.pr.new/hi-ogawa/vite-plugins/@hiogawa/vite-plugin-nitro@ca5ae37':
-    resolution: {tarball: https://pkg.pr.new/hi-ogawa/vite-plugins/@hiogawa/vite-plugin-nitro@ca5ae37}
-    version: 0.0.0
+  '@hiogawa/vite-plugin-nitro@0.0.1':
+    resolution: {integrity: sha512-EopQbSBTolnUdyQRJpHL4YrHGwqUZPPL+DsvhlNAsGwFqUtMVsi+4OdkyPfqXzcD3IcLa7Psh9IcztE4ww9biQ==}
     peerDependencies:
       vite: '*'
 
@@ -3174,7 +3173,7 @@ snapshots:
 
   '@fastify/busboy@3.1.1': {}
 
-  '@hiogawa/vite-plugin-nitro@https://pkg.pr.new/hi-ogawa/vite-plugins/@hiogawa/vite-plugin-nitro@ca5ae37(@netlify/blobs@9.1.2)(vite@7.0.6(@types/node@24.2.0)(jiti@2.5.1)(terser@5.43.1))':
+  '@hiogawa/vite-plugin-nitro@0.0.1(@netlify/blobs@9.1.2)(vite@7.0.6(@types/node@24.2.0)(jiti@2.5.1)(terser@5.43.1))':
     dependencies:
       h3: 1.15.4
       nitropack: 2.12.4(@netlify/blobs@9.1.2)
