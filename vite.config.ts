@@ -2,7 +2,8 @@ import rsc from '@vitejs/plugin-rsc'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 // import inspect from "vite-plugin-inspect";
-import nitro from "@hiogawa/vite-plugin-nitro"
+// import nitro from "@hiogawa/vite-plugin-nitro"
+import { nitro } from "nitro/vite";
 
 export default defineConfig({
   plugins: [
@@ -13,6 +14,13 @@ export default defineConfig({
       // by default, the plugin setup request handler based on `default export` of `rsc` environment `rollupOptions.input.index`.
       // This can be disabled when setting up own server handler e.g. `@cloudflare/vite-plugin`.
       // > serverHandler: false
+
+      // nitro plugin sets up handler
+      // serverHandler: {
+      //   environmentName: 'ssr',
+      //   entryName: 'index',
+      // },
+      // serverHandler: false,
     }),
 
     // use any of react plugins https://github.com/vitejs/vite-plugin-react
@@ -24,14 +32,20 @@ export default defineConfig({
     // inspect(),
 
     nitro({
-      server: {
-        environmentName: 'rsc'
-      },
-      config: {
-        // Nitro automatically chooses a preset based on deployed environment,
-        // but it can be explicitly specified if needed. e.g.
-        // preset: 'vercel',
-      },
+      // server: {
+      //   environmentName: 'rsc'
+      // },
+      // config: {
+      //   // Nitro automatically chooses a preset based on deployed environment,
+      //   // but it can be explicitly specified if needed. e.g.
+      //   // preset: 'vercel',
+      // },
+      // TODO: support non-`ssr` environment as handler entry
+      services: {
+        ssr: {
+          entry: "./src/framework/entry.ssr.tsx",
+        },
+      }
     }),
   ],
 
@@ -49,6 +63,7 @@ export default defineConfig({
             index: './src/framework/entry.rsc.tsx',
           },
         },
+        outDir: '.nitro/vite/services/rsc/',
       },
     },
 

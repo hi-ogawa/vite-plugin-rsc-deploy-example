@@ -10,18 +10,19 @@
     "preview": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@hiogawa/vite-plugin-nitro": "0.0.1",
-    "@vitejs/plugin-rsc": "latest",
+    "@hiogawa/vite-plugin-nitro": "0.0.2",
+    "@vitejs/plugin-rsc": "0.4.31",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@types/react": "^19.1.9",
-    "@types/react-dom": "^19.1.7",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "latest",
+    "nitro": "npm:nitro-nightly@3.0.0-20250918-181039-90ec8ffa",
     "rsc-html-stream": "^0.0.7",
-    "vite": "^7.0.6",
-    "vite-plugin-inspect": "^11.3.2"
+    "vite": "^7.1.6",
+    "vite-plugin-inspect": "^11.3.3"
   },
   "packageManager": "pnpm@10.14.0+sha512.ad27a79641b49c3e481a16a805baa71817a04bbe06a38d17e60e2eaee83f6a146c6a688125f5792e48dd5ba30e7da52a5cda4c3992b9ccf333f9ce223af84748"
 }
