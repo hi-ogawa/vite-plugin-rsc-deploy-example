@@ -15,12 +15,6 @@ export default defineConfig((env) => ({
       // by default, the plugin setup request handler based on `default export` of `rsc` environment `rollupOptions.input.index`.
       // This can be disabled when setting up own server handler e.g. `@cloudflare/vite-plugin`.
       // > serverHandler: false
-
-      // nitro plugin sets up handler
-      // serverHandler: {
-      //   environmentName: 'ssr',
-      //   entryName: 'index',
-      // },
     }),
 
     // use any of react plugins https://github.com/vitejs/vite-plugin-react
