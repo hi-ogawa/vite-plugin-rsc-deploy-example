@@ -4,6 +4,7 @@ import { defineConfig } from 'vite'
 // import inspect from "vite-plugin-inspect";
 // import nitro from "@hiogawa/vite-plugin-nitro"
 import { nitro } from "nitro/vite";
+import path from "node:path";
 
 export default defineConfig({
   plugins: [
@@ -20,7 +21,6 @@ export default defineConfig({
       //   environmentName: 'ssr',
       //   entryName: 'index',
       // },
-      // serverHandler: false,
     }),
 
     // use any of react plugins https://github.com/vitejs/vite-plugin-react
@@ -45,8 +45,31 @@ export default defineConfig({
         ssr: {
           entry: "./src/framework/entry.ssr.tsx",
         },
+        // rsc: {
+        //   entry: "./src/framework/entry.rsc.tsx",
+        // },
       }
     }),
+
+    {
+      name: 'fix-nitro-resolve',
+      configResolved(config) {
+        const plugins = config.environments.nitro.build.rollupOptions.plugins as any[];
+        const p = plugins.find(p => p.name === 'virtual-bundle');
+        p!.resolveId = function (id: string, importer: string) {
+          if (importer === '#nitro-vite-entry') {
+            if (id === 'entry.ssr.js') {
+              return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
+            }
+          }
+          if (importer.includes('.nitro/vite/services/rsc/index.js')) {
+            if (id === '../ssr/index.js') {
+              return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
+            }
+          }
+        }
+      },
+    }
   ],
 
   // specify entry point for each environment.
