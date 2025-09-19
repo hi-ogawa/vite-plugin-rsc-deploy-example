@@ -2,9 +2,11 @@ import rsc from '@vitejs/plugin-rsc'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 // import inspect from "vite-plugin-inspect";
-import nitro from "@hiogawa/vite-plugin-nitro"
+// import nitro from "@hiogawa/vite-plugin-nitro"
+import { nitro } from "nitro/vite";
+import path from "node:path";
 
-export default defineConfig({
+export default defineConfig((env) => ({
   plugins: [
     rsc({
       // `entries` option is only a shorthand for specifying each `rollupOptions.input` below
@@ -23,16 +25,35 @@ export default defineConfig({
     // to understand internal transforms required for RSC.
     // inspect(),
 
-    nitro({
-      server: {
-        environmentName: 'rsc'
-      },
-      config: {
-        // Nitro automatically chooses a preset based on deployed environment,
-        // but it can be explicitly specified if needed. e.g.
-        // preset: 'vercel',
-      },
+    env.command === 'build' && nitro({
+      services: {
+        ssr: {
+          entry: "./src/framework/entry.ssr.tsx",
+        },
+      }
     }),
+
+    {
+      // fix broken resolution around virtualBundlePlugin and prodEntry
+      name: 'fix-nitro-resolve',
+      resolveId: {
+        order: 'pre',
+        handler(source, importer, _options) {
+          if (this.environment.name !== 'nitro') return
+
+          if (importer === '#nitro-vite-entry') {
+            if (source === 'entry.ssr.js') {
+              return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
+            }
+          }
+          if (importer?.includes('.nitro/vite/services/rsc/index.js')) {
+            if (source === '../ssr/index.js') {
+              return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
+            }
+          }
+        },
+      }
+    }
   ],
 
   // specify entry point for each environment.
@@ -49,6 +70,7 @@ export default defineConfig({
             index: './src/framework/entry.rsc.tsx',
           },
         },
+        outDir: '.nitro/vite/services/rsc/',
       },
     },
 
@@ -82,4 +104,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))

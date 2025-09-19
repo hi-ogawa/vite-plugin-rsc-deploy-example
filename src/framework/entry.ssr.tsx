@@ -5,6 +5,14 @@ import * as ReactDOMServer from 'react-dom/server.edge'
 import { injectRSCPayload } from 'rsc-html-stream/server'
 import type { RscPayload } from './entry.rsc'
 
+// TODO: nitro support handler entry from `rsc` environment.
+export default {
+  async fetch(request: Request) {
+    const mod = await import.meta.viteRsc.loadModule<typeof import('./entry.rsc.tsx')>('rsc', 'index')
+    return mod.default(request);
+  }
+}
+
 export async function renderHTML(
   rscStream: ReadableStream<Uint8Array>,
   options: {
