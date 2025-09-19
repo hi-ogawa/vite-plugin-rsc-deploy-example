@@ -26,22 +26,10 @@ export default defineConfig((env) => ({
     // inspect(),
 
     env.command === 'build' && nitro({
-      // server: {
-      //   environmentName: 'rsc'
-      // },
-      // config: {
-      //   // Nitro automatically chooses a preset based on deployed environment,
-      //   // but it can be explicitly specified if needed. e.g.
-      //   // preset: 'vercel',
-      // },
-      // TODO: support non-`ssr` environment as handler entry
       services: {
         ssr: {
           entry: "./src/framework/entry.ssr.tsx",
         },
-        // rsc: {
-        //   entry: "./src/framework/entry.rsc.tsx",
-        // },
       }
     }),
 
