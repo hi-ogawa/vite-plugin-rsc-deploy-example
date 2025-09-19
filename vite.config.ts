@@ -6,7 +6,7 @@ import { defineConfig } from 'vite'
 import { nitro } from "nitro/vite";
 import path from "node:path";
 
-export default defineConfig({
+export default defineConfig((env) => ({
   plugins: [
     rsc({
       // `entries` option is only a shorthand for specifying each `rollupOptions.input` below
@@ -31,7 +31,7 @@ export default defineConfig({
     // to understand internal transforms required for RSC.
     // inspect(),
 
-    nitro({
+    env.command === 'build' && nitro({
       // server: {
       //   environmentName: 'rsc'
       // },
@@ -52,23 +52,25 @@ export default defineConfig({
     }),
 
     {
+      // fix broken resolution around virtualBundlePlugin and prodEntry
       name: 'fix-nitro-resolve',
-      configResolved(config) {
-        const plugins = config.environments.nitro.build.rollupOptions.plugins as any[];
-        const p = plugins.find(p => p.name === 'virtual-bundle');
-        p!.resolveId = function (id: string, importer: string) {
+      resolveId: {
+        order: 'pre',
+        handler(source, importer, _options) {
+          if (this.environment.name !== 'nitro') return
+
           if (importer === '#nitro-vite-entry') {
-            if (id === 'entry.ssr.js') {
+            if (source === 'entry.ssr.js') {
               return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
             }
           }
-          if (importer.includes('.nitro/vite/services/rsc/index.js')) {
-            if (id === '../ssr/index.js') {
+          if (importer?.includes('.nitro/vite/services/rsc/index.js')) {
+            if (source === '../ssr/index.js') {
               return path.resolve(".nitro/vite/services/ssr/entry.ssr.js")
             }
           }
-        }
-      },
+        },
+      }
     }
   ],
 
@@ -120,4 +122,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
